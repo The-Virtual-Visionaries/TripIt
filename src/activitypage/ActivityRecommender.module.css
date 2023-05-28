@@ -1,0 +1,20 @@
+.root {
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.activityContainer {
+  margin-bottom: 1em;
+  border: 1px solid #ddd;
+  padding: 1em;
+  background-color: #fafafa;
+}
+
+.deleteButton,
+.saveButton {
+  margin-top: 1em;
+}
