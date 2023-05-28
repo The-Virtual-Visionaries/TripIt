@@ -1,0 +1,83 @@
+.background-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.background-container::before {
+  content: "";
+  background-image: url("../assets/skyscraper_bg.jpg");
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  opacity: 0.9;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.title {
+  font-size: 6vw;
+  color: white;
+}
+
+.select-dates {
+  color: white;
+  font-size: 4vw;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.preferences {
+  margin-top: 20vh;
+  margin-bottom: 15vh;
+  position: relative;
+}
+
+.pref-title {
+  font-size: 4vw;
+  font-weight: 400;
+  margin: 5vh;
+}
+
+.button-container {
+  margin-left: 10vw;
+  margin-right: 10vw;
+}
+
+.btn {
+  margin-bottom: 10px;
+  width: calc(20% - 10px);
+}
+
+.btn + .btn {
+  margin-left: 10px;
+}
+
+.generate-button {
+  margin-bottom: 10vh;
+}
+
+.date-range-picker {
+  display: flex;
+  justify-content: center;
+}
+
+.date-input {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.date-input label {
+  margin-bottom: 5px;
+  font-size: 20px;
+  color: white;
+}
