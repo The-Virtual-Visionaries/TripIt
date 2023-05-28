@@ -116,7 +116,6 @@ def convert_to_itinerary(activities):
 
     # Append the last day's activities
     json_data.append({
-        "activity_name": activity_name,
         "day": current_day,
         "activities": current_activities
     })
