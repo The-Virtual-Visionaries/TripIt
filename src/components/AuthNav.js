@@ -10,6 +10,10 @@ function AuthNav() {
     navigate('/signup');
   }
 
+  const loginHandler = () => {
+    navigate('/login');
+  }
+
   return (
     <div className='AuthNav'>
         <div className='auth-logo'>
@@ -21,6 +25,7 @@ function AuthNav() {
           />
         </div>
         <div className='buttons'>
+            <button onClick={loginHandler} type="button">Login</button>
             <button onClick={createHandler} type="button">Create Account</button>
         </div>
     </div>
