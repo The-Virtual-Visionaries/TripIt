@@ -36,9 +36,9 @@
 }
 
 .preferences {
-  margin-top: 20vh;
-  margin-bottom: 15vh;
-  position: relative;
+  margin-top: 10vh;
+  margin-bottom: 5vh;
+  text-align: center;
 }
 
 .pref-title {
@@ -47,22 +47,44 @@
   margin: 5vh;
 }
 
-.button-container {
-  margin-left: 10vw;
-  margin-right: 10vw;
+.preference-inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.btn {
-  margin-bottom: 10px;
-  width: calc(20% - 10px);
+.preference-input {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 15px;
 }
 
-.btn + .btn {
-  margin-left: 10px;
+.pref-button {
+  background-color: transparent;
+  border: 2px solid #4285F4;
+  border-radius: 20px;
+  margin: 10px;
+  white-space: nowrap;
+}
+
+.addpref-btn {
+    color: white;
+    background-color: gray;
+    cursor: pointer;
+    margin-top: 2vh;
+    box-shadow: none;
+    border: none;
+    border-radius: 5px;
 }
 
 .generate-button {
   margin-bottom: 10vh;
+  display: flex;
+  justify-content: center;
 }
 
 .date-range-picker {
@@ -81,3 +103,4 @@
   font-size: 20px;
   color: white;
 }
+

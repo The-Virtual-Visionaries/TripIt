@@ -13,8 +13,8 @@ const SignUp = () => {
     e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log(userCredential);
         navigate('/login');
+        console.log(userCredential);
       })
       .catch((error) => {
         console.log(error);
