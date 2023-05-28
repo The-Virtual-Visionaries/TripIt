@@ -1,6 +1,5 @@
 import React from 'react'
 import './Offerings.css'
-import BlackAuthNav from '../components/BlackAuthNav'
 
 function Offerings() {
   return (
