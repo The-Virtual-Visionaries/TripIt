@@ -4,7 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Itineraries from "./itinerariespage/Itineraries";
 import React from "react";
 import Login from "./components/Login";
-import CreateItinerary from "./createpage/CreateItinerary.js";
+import CreateItinerary from "./createpage/CreateItinerary";
+import ActivityRecommender from "./activitypage/ActivityRecommender";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/itineraries" element={<Itineraries />} />
+        <Route path="/activity" element={<ActivityRecommender />} />
       </Routes>
     </BrowserRouter>
   );

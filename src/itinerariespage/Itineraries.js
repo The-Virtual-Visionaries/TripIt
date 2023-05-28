@@ -32,6 +32,7 @@ export default function Itineraries() {
         snapshot.forEach((itinerary) => {
           list.push({
             iid: itinerary.id,
+            name: itinerary.data().name,
             destination: itinerary.data().destination,
             startDate: itinerary.data().startDate,
             endDate: itinerary.data().endDate,
@@ -56,6 +57,7 @@ export default function Itineraries() {
           <Itinerary
             key={item.iid}
             iid={item.iid}
+            name={item.name}
             destination={item.destination}
             startDate={item.startDate}
             endDate={item.endDate}
