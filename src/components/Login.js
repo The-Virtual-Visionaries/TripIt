@@ -14,29 +14,27 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
-        navigate('/home');
+        navigate('/create');
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const navigateToCreateAcc = () => {
-    navigate('/signup');
-  }
-
   return (
-    <div classNameName="sign-in-container">
+    <div className="shadow-container">
+    <div className="sign-in-container">
       <form onSubmit={signIn}>
-        <div classNameName="login-title">Login</div>
-        <div className="mb-3">
-          <label for="exampleFormControlInput1" className="form-label">Email address</label>
-          <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)}></input>
+        <div className="login-title">Login</div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)}></input>
         </div>
-        <label for="inputPassword5" className="form-label">Password</label>
-        <input type="password" id="inputPassword5" className="form-control" aria-labelledby="passwordHelpBlock" value={password} onChange={(e) => setPassword(e.target.value)}></input>
-        <button type="submit" classNameName="login-button">Login</button>
+        <label for="inputPassword5" class="form-label">Password</label>
+        <input type="password" id="inputPassword5" class="form-control" aria-labelledby="passwordHelpBlock" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+        <button type="submit" className="login-button">Login</button>
       </form>
+    </div>
     </div>
   );
 };
