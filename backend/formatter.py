@@ -73,7 +73,7 @@ def convert_to_itinerary(text):
             if time_of_day not in current_day:
                 current_day[time_of_day] = []
             current_day[time_of_day].append(
-                {"activity_type": activity_type, "description": description}
+                {"activity_name": activity_type, "description": description}
             )
 
     # Append the last day to the itinerary
