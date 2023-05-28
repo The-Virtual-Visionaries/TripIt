@@ -1,0 +1,22 @@
+.Offerings {
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+}
+
+.offering {
+    font-size: 4vw;
+    margin: 2vw;
+    text-align: center;
+}
+
+.offering-para {
+    font-size: 1.5vw;
+    font-weight: 200;
+}
+
+.offering-text {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
