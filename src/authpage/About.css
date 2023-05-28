@@ -1,55 +1,60 @@
 .About {
+    background-image: url('../assets/login-pic.jpg');
+    background-size: cover;
+    background-position: center;
     display: flex;
-    flex-direction: row;
-    margin-top: 8vh;
-    position: relative;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
 }
-
-.about-overlay {
+  
+.authnav {
+    width: 100%;
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Adjust the transparency by modifying the last value */
-    z-index: -1;
 }
-
+  
+.centered-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20%;
+}
+  
 .about-title {
     font-size: 4vw;
     font-weight: 600;
-}
-
-.about-para {
-    font-size: 1.5vw;
-    font-weight: 200;
-}
-
-.about-text {
     color: white;
-    flex: 1;
-    margin-left: 10vw;
-    margin-right: 2vw;
-    position: relative;
-    z-index: 1;
-    padding: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid white; 
+    padding-right: 10px; 
+    animation: typing 5s steps(40) 1s 1 normal both;
 }
 
-.about-text::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: -1;
-    border-radius: 50px;
+.about-title span {
+    display: inline-block;
+    animation: typing 5s steps(40) 1s infinite;
+}
+  
+.about-button {
+    display: inline-block;
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 3vh;
 }
 
-.about-pic {
-    flex: 0.5;
-    width: 5vw;
-    height: 50vh;
-    margin: 5vw;
+@keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
 }
