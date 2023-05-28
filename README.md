@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+<div align="center">
+    <img src="src/assets/tripit_logo.png" alt="TripIt" title="TripIt" />
+</div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## What is TripIt?
+<div>TripIt is a website designed to streamline and simplify the process of planning your travel itineraries. Our platform harnesses the power of artificial intelligence to create personalized itineraries tailored to your preferences and travel needs.</div>
+<br>
+<div>With TripIt, all you need to do is provide your travel destination, dates, and travel preferences and it will generate an itinerary for you. We also offer you the flexibility to view, add and edit places in your itinerary. </div>
+<br>
+<div>Say goodbye to the hassle of using multiple apps and endless spreadsheets. TripIt consolidates all your travel information into one website, making it a breeze to access your itinerary from any device anytime and anywhere.</div>
 
-In the project directory, you can run:
+<br>
+<hr>
 
-### `npm start`
+## Try TripIt for yourself!
+Head over to our website [here!](https://www.google.com/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
+- **Personalized Itineraries** - TripIt uses artificial intelligence to generate personalized itineraries based on your travel preferences and needs.
+- **Flexibility** - TripIt allows you to view, add and edit places in your itinerary.
+- **Accessibility** - TripIt consolidates all your travel information into one website, making it a breeze to access your itinerary from any device anytime and anywhere.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Tech Stack
+<div align="center">
+	<code><img height="50" src="src/assets/tech_stack/flask.svg" alt="Flask" title="Flask" #head /></code>
+    <code><img height="50" src="src/assets/tech_stack/react.svg" alt="React" title="React" /></code>
+    <code><img height="50" src="src/assets/tech_stack/mui.svg" alt="MUI" title="MUI" /></code>
+	<code><img height="50" src="src/assets/tech_stack/openai.svg" alt="OpenAI" title="OpenAI" /></code>
+</div>
 
-### `npm test`
+<hr>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Collaborators
+[Dilys Pang](https://github.com/Dilysss)
+[Kavan Tan](https://github.com/kavantan)
+[Kevin Eyo](https://github.com/KevinEyo1)
+[Merrick Neo](https://github.com/Merrickneo)
