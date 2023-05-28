@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import Popup from "reactjs-popup";
 import FullHistoryItem from "./FullHistoryItem";
-import { Button } from "@mui/material";
 
 export default function Itinerary(props) {
   const { iid, destination, startDate, endDate } = props;
-  const popupRef = React.createRef();
 
   return (
     <div style={{ border: "1px solid black", padding: "10px" }}>
