@@ -25,11 +25,11 @@ def chatgpt(country, num_days, start_date, end_date, preferences):
     Follow this format for me to parse later
     Day 1
     Morning
-    Activity | Activity Type | Description
+    Activity Name | Description
     Afternoon
-    Activity | Activity Type | Description
+    Activity Name | Description
     Night
-    Activity | Activity Type | Description
+    Activity Name | Description
 
     Keep the description concise and only include the itinerary details. Ensure the total response has no cut off and each day has some activities.
     """.format(

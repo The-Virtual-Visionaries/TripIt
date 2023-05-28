@@ -9,14 +9,14 @@ def parse_response(response):
     #             "finish_reason": "stop",
     #             "index": 0,
     #             "logprobs": "null",
-    #             "text": "\nDay 1:\nActivity | Activity Type | Description\n1. Singapore National Museum | Museum | Explore the history and culture of Singapore.\n2. Gardens by the Bay | Park | Enjoy the beauty of nature and the Supertree Grove.\n3. Singapore River Cruise | Boat Tour | Take a leisurely cruise along the Singapore River.\n4. Singapore Flyer | Observation Wheel | Enjoy the stunning views of Singapore from the world's largest observation wheel.\n5. Chinatown | Shopping | Explore the bustling streets of Chinatown and shop for souvenirs.\n6. Clarke Quay | Nightlife | Enjoy the vibrant nightlife of Clarke Quay.",
+    #             "text": "\nDay 1\nMorning | Museum | Visit the Australian National Maritime Museum to explore the history of Australia's relationship with the sea.\nAfternoon | Shopping | Visit the Queen Victoria Building, a heritage-listed shopping center in the heart of Sydney.\nNight | Skyscrapers | Take a tour of the Sydney Tower Eye, the tallest building in Sydney, for a 360-degree view of the city.\n\nDay 2\nMorning | Nature | Take a walk in the Royal Botanic Garden, a 30-hectare garden located on the eastern fringe of the Sydney central business district.\nAfternoon | Theme Parks | Visit Luna Park, a historic amusement park located on the northern shore of Sydney Harbour.\nNight | Historical Architectures | Take a tour of the Sydney Opera House, a UNESCO World Heritage Site and one of the most iconic buildings in the world.",
     #         }
     #     ],
-    #     "created": 1685157612,
-    #     "id": "cmpl-7KelQpboLk0eHoe1D9kBZViMosACn",
+    #     "created": 1685265095,
+    #     "id": "cmpl-7L6j1lQFaWLpFKsWPqBW7tmTKhHsm",
     #     "model": "text-davinci-003",
     #     "object": "text_completion",
-    #     "usage": {"completion_tokens": 133, "prompt_tokens": 82, "total_tokens": 215},
+    #     "usage": {"completion_tokens": 177, "prompt_tokens": 192, "total_tokens": 369},
     # }
     # response = {
     #     "choices": [
@@ -49,77 +49,36 @@ def parse_response(response):
     #     "object": "text_completion",
     #     "usage": {"completion_tokens": 314, "prompt_tokens": 179, "total_tokens": 493},
     # }
-
     text = response["choices"][0]["text"]
-    # print(text)
     return convert_to_itinerary(text)
 
-
-# def convert_to_itinerary(activities):
-#     # Split the text into sepearate lines
-#     activities = activities.replace("\n", "", 1)
-#     lines = activities.splitlines()
-#     itinerary = {}
-
-#     day = None
-#     for line in lines:
-#         line = line.strip()
-
-#         if line.startswith("Day"):
-#             day = line
-#             itinerary[day] = []
-#         elif line.startswith("Activity") or len(line) == 0:
-#             continue
-#         else:
-#             activity, activity_type, description = line.split(" | ")
-#             # Append the activity type and description to the list of activities for the current day
-#             itinerary[day].append(
-#                 {"activity_type": activity_type, "description": description}
-#             )
-#     # Convert into JSON object
-#     return json.dumps(itinerary)
-
-
-def convert_to_itinerary(activities):
-    activities = activities.replace("\n", "", 1)
-    print(activities)
-    lines = activities.splitlines()
-    json_data = []
-
-    day_counter = 1
+def convert_to_itinerary(text):
+    # Split the text by '\n' character
+    lines = text.split("\n")
+    itinerary = []
     current_day = None
-    current_time_slot = None
-    current_activities = defaultdict(list)
 
     for line in lines:
-        if line.startswith('Day'):
-            if current_day is not None and current_time_slot is not None:
-                json_data.append({
-                    "day": current_day,
-                    "activities": current_activities
-                })
-                current_activities = defaultdict(list)
-                day_counter += 1
-            current_day = day_counter
-        elif line in ['Morning', 'Afternoon', 'Night']:
-            current_time_slot = line
-        elif line.startswith("\n") or len(line) == 0:
+        # Ignore empty lines
+        if not line.strip():
             continue
+
+        if "Day" in line:
+            if current_day is not None:
+                itinerary.append(current_day)
+            day_num = int(line.split(" ")[1])
+            current_day = {"day": day_num}
         else:
-            print(line.split(' | '))
-            activity_name, activity_type, description = map(str.strip, line.split(' | '))
-            current_activities[current_time_slot].append({
-                "activity_name": activity_name,
-                "activity_type": activity_type,
-                "description": description
-            })
+            time_of_day, activity_type, description = line.split(" | ")
+            if time_of_day not in current_day:
+                current_day[time_of_day] = []
+            current_day[time_of_day].append(
+                {"activity_name": activity_type, "description": description}
+            )
 
-    # Append the last day's activities
-    json_data.append({
-        "day": current_day,
-        "activities": current_activities
-    })
+    # Append the last day to the itinerary
+    if current_day is not None:
+        itinerary.append(current_day)
 
-    json_output = json.dumps(json_data)
-    print(json_output)
-    return json_output
+    # Convert the list to JSON
+    return json.dumps(itinerary, indent=2)
