@@ -139,7 +139,7 @@ function CreateItinerary() {
         ],
       },
     ];
-    navigate("/activity", { state: { data: recommended_activities } });
+    navigate("/activity", { state: { data: sampleData } });
   };
 
   return (

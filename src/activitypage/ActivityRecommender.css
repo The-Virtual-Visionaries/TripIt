@@ -1,0 +1,57 @@
+.root {
+  font-family: Arial, sans-serif;
+}
+
+.day {
+  font-size: 3vw;
+  margin: 1vw;
+  font-weight: 600;
+}
+
+.activityContainer {
+  border: 1px solid #ddd;
+  padding: 1em;
+  background-color: white;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.activity-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.activity-info {
+  background-color: #001533;
+  color: white;
+  border-radius: 20px;
+  padding: 5vh;
+}
+
+.activityInfo .root {
+  margin-bottom: 10vh; /* Adjust spacing as needed */
+}
+
+.deleteButton,
+.saveButton {
+  margin-top: 1em;
+}
+
+.save {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.saveButton {
+  background-color: #4285F4;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 6vh;
+  color: white;
+  padding: 10px;
+}
