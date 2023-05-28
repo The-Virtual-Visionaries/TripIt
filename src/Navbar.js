@@ -8,7 +8,7 @@ function Navbar() {
       style={{ backgroundColor: "#7F9CC6" }}
     >
       <div className="container-fluid">
-        <a className="navbar-brand" href="/home">
+        <a className="navbar-brand" href="/create">
           <img
             src={require("./assets/tripit_logo.png")}
             alt="logo"
