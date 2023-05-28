@@ -178,17 +178,21 @@ function CreateItinerary() {
         <div className="preferences">
           <div className="pref-title">What are your travel preferences</div>
           <div className="preference-inputs">
+            <div className="preference-input">
             {preferences.map((preference, index) => (
-              <div key={index} className="preference-input">
+              <div key={index}>
                 <input
                   type="text"
                   value={preference}
+                  placeholder="your preferences..."
+                  className="pref-button"
                   onChange={(event) => handlePreferenceChange(index, event)}
                 />
               </div>
             ))}
-            <button onClick={handleAddPreference}>
-              Add one more preference
+            </div>
+            <button onClick={handleAddPreference} className="addpref-btn">
+              Add Preference
             </button>
           </div>
         </div>
