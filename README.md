@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="src/assets/trip_it_black.png" alt="TripIt" title="TripIt" />
+    <img src="src/assets/tripit_black_logo.png" alt="TripIt" title="TripIt" />
 </div>
 
 
