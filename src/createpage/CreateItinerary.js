@@ -4,6 +4,7 @@ import Select from "react-select";
 import countryList from "react-select-country-list";
 import "./CreateItinerary.css";
 import Navbar from "../Navbar";
+import axios from "axios";
 
 function CreateItinerary() {
   const [country, setCountry] = useState("");
@@ -44,6 +45,23 @@ function CreateItinerary() {
       endDate,
       preferences,
     };
+    let start = new Date(startDate);
+    let end = new Date(endDate);
+    let diff = end - start + 1;
+    console.log(start, end, diff);
+
+    const params = {
+        country: country.label,
+        num_days: diff,
+        start_date: startDate,
+        end_date: endDate,
+        preferences: preferences.toString()
+    };
+    console.log(params);
+    let recommended_activities = axios.get('https://virtual-visionaries.herokuapp.com/recommend', { params:params })
+        .then(response => {
+        console.log(response.data);
+    })
     /** 
         {
             country: {label: "Singapore", value: "SG"},
@@ -121,7 +139,7 @@ function CreateItinerary() {
         ],
       },
     ];
-    navigate("/activity", { state: { data: sampleData } });
+    navigate("/activity", { state: { data: recommended_activities } });
   };
 
   return (

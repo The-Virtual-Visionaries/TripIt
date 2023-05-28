@@ -7,7 +7,7 @@ app = flask.Flask(__name__)
 
 CORS(app)
 
-CORS(app, origins="http://tripit.netlify.app/")
+CORS(app, origins="http://localhost:3000")
 
 
 @app.route("/", methods=["GET", "POST"])
