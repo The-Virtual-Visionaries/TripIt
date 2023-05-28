@@ -8,8 +8,8 @@ function About() {
 
   const navigate = useNavigate();
 
-  const loginHandler = () => {
-    navigate('/login');
+  const offeringHandler = () => {
+    navigate('/offerings');
   }
 
   return (
@@ -20,7 +20,7 @@ function About() {
       <div className='centered-content'>
         <TypingAnimation />
         <div>
-          <button onClick={loginHandler} className='about-button' type="button">Login</button>
+          <button onClick={offeringHandler} className='about-button' type="button">Our Offerings</button>
         </div>
       </div>
     </div>
