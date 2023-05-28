@@ -1,0 +1,9 @@
+.account-button {
+    border-radius: 10px;
+    padding: 8px;
+    margin-right: 1vw;
+    border: none;
+    margin-top: 3vh;
+    background-color: #4285F4;
+    color: white;
+}
