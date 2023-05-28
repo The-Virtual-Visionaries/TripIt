@@ -34,6 +34,91 @@ const ActivityRecommender = () => {
     navigate("/history", { state: { data: data } });
   };
 
+  const addActivity = (dayId, time, activity) => {
+    const day = data.find((day) => day.day === dayId);
+    day[time].push(activity);
+    setData([...data]);
+  };
+
+  const editActivity = (dayId, time, activityIndex, updatedActivity) => {
+    const day = data.find((day) => day.day === dayId);
+    day[time][activityIndex] = updatedActivity;
+    setData([...data]);
+  };
+
+  const AddActivityButton = ({ onAdd }) => {
+    const [showForm, setShowForm] = useState(false);
+    const [activityType, setActivityType] = useState("");
+    const [activityDescription, setActivityDescription] = useState("");
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      onAdd({ activity_type: activityType, description: activityDescription });
+      setActivityType("");
+      setActivityDescription("");
+      setShowForm(false);
+    };
+
+    return (
+      <>
+        {showForm ? (
+          <form onSubmit={handleSubmit}>
+            <input
+              value={activityType}
+              onChange={(e) => setActivityType(e.target.value)}
+              placeholder="Activity Type"
+            />
+            <input
+              value={activityDescription}
+              onChange={(e) => setActivityDescription(e.target.value)}
+              placeholder="Activity Description"
+            />
+            <button type="submit">Add Activity</button>
+            <button onClick={() => setShowForm(false)}>Cancel</button>
+          </form>
+        ) : (
+          <button onClick={() => setShowForm(true)}>Add Activity</button>
+        )}
+      </>
+    );
+  };
+
+  const EditableActivity = ({ activity, onDelete, onEdit }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [activityType, setActivityType] = useState(activity.activity_type);
+    const [activityDescription, setActivityDescription] = useState(
+      activity.description
+    );
+
+    const handleEdit = (event) => {
+      event.preventDefault();
+      onEdit({ activity_type: activityType, description: activityDescription });
+      setIsEditing(false);
+    };
+
+    return isEditing ? (
+      <form onSubmit={handleEdit}>
+        <input
+          value={activityType}
+          onChange={(e) => setActivityType(e.target.value)}
+        />
+        <input
+          value={activityDescription}
+          onChange={(e) => setActivityDescription(e.target.value)}
+        />
+        <button type="submit">Confirm</button>
+        <button onClick={() => setIsEditing(false)}>Cancel</button>
+      </form>
+    ) : (
+      <div>
+        <h3>{activity.activity_type}</h3>
+        <p>{activity.description}</p>
+        <button onClick={() => setIsEditing(true)}>Edit</button>
+        <button onClick={onDelete}>Delete</button>
+      </div>
+    );
+  };
+
   return (
     <>
       <Navbar />
@@ -66,22 +151,27 @@ const ActivityRecommender = () => {
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <div>
-                            <h3>{activity.activity_type}</h3>
-                            <p>{activity.description}</p>
-                            <button
-                              className={styles.deleteButton}
-                              onClick={() =>
-                                deleteActivity(day.day, time, activityIndex)
-                              }
-                            >
-                              Delete
-                            </button>
-                          </div>
+                          <EditableActivity
+                            activity={activity}
+                            onDelete={() =>
+                              deleteActivity(day.day, time, activityIndex)
+                            }
+                            onEdit={(updatedActivity) =>
+                              editActivity(
+                                day.day,
+                                time,
+                                activityIndex,
+                                updatedActivity
+                              )
+                            }
+                          />
                         </div>
                       )}
                     </Draggable>
                   ))}
+                  <AddActivityButton
+                    onAdd={(activity) => addActivity(day.day, time, activity)}
+                  />
                   {provided.placeholder}
                 </div>
               )}
