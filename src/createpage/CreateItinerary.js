@@ -5,7 +5,7 @@ import countryList from "react-select-country-list";
 import "./CreateItinerary.css";
 import Navbar from "../Navbar";
 import { auth } from "../firebase";
-import axios from "axios";
+// import axios from "axios";
 
 function CreateItinerary() {
   const [country, setCountry] = useState("");
@@ -42,7 +42,7 @@ function CreateItinerary() {
 
     let start = new Date(startDate);
     let end = new Date(endDate);
-    let diff = end - start + 1;
+    let diff = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
     console.log(start, end, diff);
 
     const itineraryDetails = {
@@ -82,21 +82,21 @@ function CreateItinerary() {
         day: 1,
         Morning: [
           {
-            activity_type: "Museum",
+            activity_name: "Museum",
             description:
               "Visit the Australian National Maritime Museum to explore the history of Australia's relationship with the sea.",
           },
         ],
         Afternoon: [
           {
-            activity_type: "Shopping",
+            activity_name: "Shopping",
             description:
               "Visit the Queen Victoria Building, a heritage-listed shopping center in the heart of Sydney.",
           },
         ],
         Night: [
           {
-            activity_type: "Skyscrapers",
+            activity_name: "Skyscrapers",
             description:
               "Take a tour of the Sydney Tower Eye, the tallest building in Sydney, for a 360-degree view of the city.",
           },
@@ -106,21 +106,21 @@ function CreateItinerary() {
         day: 2,
         Morning: [
           {
-            activity_type: "Nature",
+            activity_name: "Nature",
             description:
               "Take a walk in the Royal Botanic Garden, a 30-hectare garden with over 7,500 species of plants.",
           },
         ],
         Afternoon: [
           {
-            activity_type: "Theme Parks",
+            activity_name: "Theme Parks",
             description:
               "Visit Luna Park, a historic amusement park with rides, games, and carnival attractions.",
           },
         ],
         Night: [
           {
-            activity_type: "Historical Architectures",
+            activity_name: "Historical Architectures",
             description:
               "Take a tour of the Sydney Opera House, a UNESCO World Heritage Site and one of the most iconic buildings in the world.",
           },

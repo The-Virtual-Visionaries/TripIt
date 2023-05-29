@@ -120,6 +120,7 @@ const ActivityRecommender = () => {
 
   const handleUpdatingItinerary = (colRef, activities) => {
     // update activities of itinerary based on colRef
+    console.log(colRef);
     for (let i = 0; i < activities.length; i++) {
       addDoc(colRef, {
         day: activities[i].day,
@@ -192,7 +193,7 @@ const ActivityRecommender = () => {
       for (let j = 0; j < night.length; j++) {
         const activity = {
           day: day,
-          timing: "night",
+          timing: "Night",
           description: night[j].description,
           activity_name: night[j].activity_name,
         };
