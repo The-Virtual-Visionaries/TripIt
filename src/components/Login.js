@@ -26,6 +26,7 @@ const Login = () => {
         navigate("/create");
       })
       .catch((error) => {
+        window.alert("Please input the correct login information.");
         console.log(error);
       });
   };
