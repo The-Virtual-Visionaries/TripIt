@@ -12,6 +12,7 @@ function CreateItinerary() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [preferences, setPreferences] = useState([""]);
+  const [itineraryName, setItineraryName] = useState("");
   const navigate = useNavigate();
   const options = countryList().getData();
   const [errors, setErrors] = useState([]);
@@ -24,6 +25,10 @@ function CreateItinerary() {
 
   const handleAddPreference = () => {
     setPreferences([...preferences, ""]);
+  };
+
+  const handleItineraryNameChange = (event) => {
+    setItineraryName(event.target.value);
   };
 
   const handleCountryChange = (value) => {
@@ -66,6 +71,14 @@ function CreateItinerary() {
       }
     }
 
+    if (!itineraryName.trim()) {
+      errors.push("Itinerary name should not be empty");
+    }
+
+    if (itineraryName.length > 30) {
+      errors.push("Itinerary name should not be longer than 30 characters");
+    }
+
     return errors;
   };
 
@@ -90,7 +103,7 @@ function CreateItinerary() {
       startDate: startDate,
       endDate: endDate,
       days: diff,
-      name: "Itinerary Name",
+      name: itineraryName,
       uid: auth.currentUser.uid,
     };
 
@@ -217,7 +230,6 @@ function CreateItinerary() {
                     className="pref-button"
                     onChange={(event) => handlePreferenceChange(index, event)}
                   />
-
                 </div>
               ))}
             </div>
@@ -227,8 +239,15 @@ function CreateItinerary() {
           </div>
         </div>
         <div className="naming">
-            <div>What's your itinerary name?</div>
-            <input class="form-control small-input" type="text" placeholder="name..." aria-label="default input example"></input>
+          <div>What's your itinerary name?</div>
+          <input
+            class="form-control small-input"
+            type="text"
+            placeholder="name..."
+            aria-label="default input example"
+            value={itineraryName}
+            onChange={handleItineraryNameChange}
+          />
         </div>
         {errors.length > 0 && (
           <div className="error-container">
