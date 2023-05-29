@@ -41,20 +41,22 @@ export default function Itinerary(props) {
   };
 
   return (
-    <div className="card card-custom" style={{ width: "18rem" }}>
-      <div class="card-body card-body-custom">
+    <div className="itinerary">
+    <div className="card card-custom">
         <div class="card-title card-title-custom">
-          <div>{name}</div>
+          <div>{destination.toUpperCase()}</div>
         </div>
-        <div class="card-subtitle mb-2 text-body-secondary">{destination}</div>
+        <div class="card-subtitle">{name}</div>
         <div class="card-text">
           {startDate} - {endDate}
         </div>
-      </div>
+        <div className="iti-buttons">
+          <button className="iti-button" onClick={handleEditItinerary}>Edit</button>
+          <button className="iti-button" onClick={handleDeleteItinerary}>Delete</button>
+        </div>
+    </div>
     </div>
   );
 }
 
 // buttons for edit and delete
-// <button onClick={handleEditItinerary}>Edit Itinerary</button>
-// <button onClick={handleDeleteItinerary}>Delete Itinerary</button>

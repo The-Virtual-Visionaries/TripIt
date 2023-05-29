@@ -227,7 +227,7 @@ function CreateItinerary() {
           </div>
         </div>
         <div className="naming">
-            <div>What's your itinerary name?</div>
+            <div>What's your itinerary's name?</div>
             <input class="form-control small-input" type="text" placeholder="name..." aria-label="default input example"></input>
         </div>
         {errors.length > 0 && (
