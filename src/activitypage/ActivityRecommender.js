@@ -13,6 +13,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 import "./ActivityRecommender.css";
+import Loading from "../components/Loading.js";
 
 const ActivityRecommender = () => {
   const location = useLocation();
@@ -349,6 +350,7 @@ const ActivityRecommender = () => {
   return (
     <>
       <Navbar />
+      {loaded === false && <Loading />}
       <DragDropContext onDragEnd={handleOnDragEnd}>
         {loaded === true &&
           data.map((day, index) =>
