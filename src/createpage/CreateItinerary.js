@@ -12,8 +12,10 @@ function CreateItinerary() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [preferences, setPreferences] = useState([""]);
+  const [itineraryName, setItineraryName] = useState("");
   const navigate = useNavigate();
   const options = countryList().getData();
+  const [errors, setErrors] = useState([]);
 
   const handlePreferenceChange = (index, event) => {
     const values = [...preferences];
@@ -23,6 +25,10 @@ function CreateItinerary() {
 
   const handleAddPreference = () => {
     setPreferences([...preferences, ""]);
+  };
+
+  const handleItineraryNameChange = (event) => {
+    setItineraryName(event.target.value);
   };
 
   const handleCountryChange = (value) => {
@@ -37,8 +43,54 @@ function CreateItinerary() {
     setEndDate(event.target.value);
   };
 
+  const validateInputs = () => {
+    let errors = [];
+    if (!country || !country.label) {
+      errors.push("Country should not be blank");
+    }
+
+    if (!startDate || !endDate) {
+      errors.push("Start and end dates cannot be blank");
+    }
+
+    let start = new Date(startDate);
+    let end = new Date(endDate);
+    let diff = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+
+    if (isNaN(diff)) {
+      errors.push("Invalid start or end date");
+    } else if (diff < 0) {
+      errors.push("Start date must be earlier than the end date");
+    } else if (diff > 10) {
+      errors.push("Start and end dates cannot be more than 10 days apart");
+    }
+
+    for (let preference of preferences) {
+      if (preference.length > 20) {
+        errors.push("Preferences should not be more than 20 characters");
+      }
+    }
+
+    if (!itineraryName.trim()) {
+      errors.push("Itinerary name should not be empty");
+    }
+
+    if (itineraryName.length > 30) {
+      errors.push("Itinerary name should not be longer than 30 characters");
+    }
+
+    return errors;
+  };
+
   const handleGenerateItinerary = (event) => {
     event.preventDefault();
+
+    const errors = validateInputs();
+
+    if (errors.length > 0) {
+      setErrors(errors);
+      return;
+    }
 
     let start = new Date(startDate);
     let end = new Date(endDate);
@@ -51,7 +103,7 @@ function CreateItinerary() {
       startDate: startDate,
       endDate: endDate,
       days: diff,
-      name: "Itinerary Name",
+      name: itineraryName,
       uid: auth.currentUser.uid,
     };
 
@@ -186,6 +238,26 @@ function CreateItinerary() {
             </button>
           </div>
         </div>
+        <div className="naming">
+          <div>What's your itinerary name?</div>
+          <input
+            class="form-control small-input"
+            type="text"
+            placeholder="name..."
+            aria-label="default input example"
+            value={itineraryName}
+            onChange={handleItineraryNameChange}
+          />
+        </div>
+        {errors.length > 0 && (
+          <div className="error-container">
+            {errors.map((error, index) => (
+              <div key={index} className="error-message">
+                {error}
+              </div>
+            ))}
+          </div>
+        )}
         <div className="generate-button">
           <button
             type="button"
