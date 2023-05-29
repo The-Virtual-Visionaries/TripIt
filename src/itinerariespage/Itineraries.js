@@ -15,14 +15,13 @@ export default function Itineraries() {
   const [reload, setReload] = useState(true);
 
   useEffect(() => {
-    console.log("1");
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
         setUid(uid);
         getItineraries(uid);
       } else {
-        console.log("user is not signed in");
+        navigate("/");
       }
     });
     return () => unsubscribe();

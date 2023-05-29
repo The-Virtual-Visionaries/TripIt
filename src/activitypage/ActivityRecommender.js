@@ -3,7 +3,8 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar.js";
 import { setDoc } from "firebase/firestore";
-import { db } from "../firebase.js";
+import { db, auth } from "../firebase.js";
+import { onAuthStateChanged } from "firebase/auth";
 import {
   doc,
   collection,
@@ -18,17 +19,24 @@ import Loading from "../components/Loading.js";
 const ActivityRecommender = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [data, setData] = useState(location.state.data);
-  const [itinerary, setItinerary] = useState(location.state.itinerary);
+  const [data, setData] = useState(location.state?.data);
+  const [itinerary, setItinerary] = useState(location.state?.itinerary);
   // can generalise gpt route to pass in loaded as true - location.state.loaded == true
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (itinerary.iid !== "") {
-      getInitialActivities();
-    } else {
-      setLoaded(true);
-    }
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        if (itinerary.iid !== "") {
+          getInitialActivities();
+        } else {
+          setLoaded(true);
+        }
+      } else {
+        navigate("/");
+      }
+    });
+    return () => unsubscribe();
   }, []);
 
   // firestore route, get all stored activities for this itinerary
