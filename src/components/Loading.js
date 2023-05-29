@@ -1,5 +1,6 @@
 import React from "react";
 
+
 function Loading() {
   return (
     <div
@@ -11,8 +12,8 @@ function Loading() {
         margin: "20%",
       }}
     >
-      <img src="../assets/flying-airplane.gif" alt="airplane" />
-      <img src="../assets/Loading_icon.gif" alt="loading ring" />
+      <img style={{width:"80px", height:"80px"}} src={require("../assets/flying-airplane.gif")} alt="airplane" />
+      <img style={{width:"80px", height:"80px"}} src={require("../assets/Loading_icon.gif")} alt="loading ring" />
     </div>
   );
 }
