@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar.js";
-import styles from "./ActivityRecommender.module.css";
 import { setDoc } from "firebase/firestore";
 import { db } from "../firebase.js";
 import {
@@ -13,6 +12,7 @@ import {
   deleteDoc,
   addDoc,
 } from "firebase/firestore";
+import "./ActivityRecommender.css";
 
 const ActivityRecommender = () => {
   const location = useLocation();
@@ -266,7 +266,17 @@ const ActivityRecommender = () => {
             <button onClick={() => setShowForm(false)}>Cancel</button>
           </form>
         ) : (
-          <button onClick={() => setShowForm(true)}>Add Activity</button>
+          <button
+            style={{
+              borderRadius: "40px",
+              border: "black",
+              backgroundColor: "transparent",
+              fontSize: "4vw",
+            }}
+            onClick={() => setShowForm(true)}
+          >
+            +
+          </button>
         )}
       </>
     );
@@ -302,8 +312,36 @@ const ActivityRecommender = () => {
       <div>
         <h3>{activity.activity_name}</h3>
         <p>{activity.description}</p>
-        <button onClick={() => setIsEditing(true)}>Edit</button>
-        <button onClick={onDelete}>Delete</button>
+        <button
+          style={{
+            backgroundColor: "#559AFF",
+            borderRadius: "10px",
+            marginBottom: "6vh",
+            color: "white",
+            paddingRight: "20px",
+            paddingLeft: "20px",
+            border: "none",
+            margin: "0.5vw",
+          }}
+          onClick={() => setIsEditing(true)}
+        >
+          Edit
+        </button>
+        <button
+          style={{
+            backgroundColor: "#559AFF",
+            borderRadius: "10px",
+            marginBottom: "6vh",
+            color: "white",
+            paddingRight: "20px",
+            paddingLeft: "20px",
+            border: "none",
+            margin: "0.5vw",
+          }}
+          onClick={onDelete}
+        >
+          Delete
+        </button>
       </div>
     );
   };
@@ -320,56 +358,66 @@ const ActivityRecommender = () => {
               >
                 {(provided) => (
                   <div
-                    className={styles.activityContainer}
+                    className="activityContainer"
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
-                    <h2 className={styles.title}>
-                      Day {day.day} - {time}
-                    </h2>
-                    {day[time].map((activity, activityIndex) => (
-                      <Draggable
-                        key={activity.activity_name}
-                        draggableId={activity.activity_name}
-                        index={activityIndex}
-                      >
-                        {(provided) => (
-                          <div
-                            className={styles.root}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            ref={provided.innerRef}
-                          >
-                            <EditableActivity
-                              activity={activity}
-                              onDelete={() =>
-                                deleteActivity(day.day, time, activityIndex)
-                              }
-                              onEdit={(updatedActivity) =>
-                                editActivity(
-                                  day.day,
-                                  time,
-                                  activityIndex,
-                                  updatedActivity
-                                )
-                              }
-                            />
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    <AddActivityButton
-                      onAdd={(activity) => addActivity(day.day, time, activity)}
-                    />
+                    <div className="activity-header">
+                      <div className="day">
+                        Day {day.day} - {time}
+                      </div>
+                      <div className="add-activity-btn">
+                        <AddActivityButton
+                          onAdd={(activity) =>
+                            addActivity(day.day, time, activity)
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className="activity-info">
+                      {day[time].map((activity, activityIndex) => (
+                        <Draggable
+                          key={activity.activity_type}
+                          draggableId={activity.activity_type}
+                          index={activityIndex}
+                        >
+                          {(provided) => (
+                            <div
+                              className="root"
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              ref={provided.innerRef}
+                            >
+                              <EditableActivity
+                                activity={activity}
+                                onDelete={() =>
+                                  deleteActivity(day.day, time, activityIndex)
+                                }
+                                onEdit={(updatedActivity) =>
+                                  editActivity(
+                                    day.day,
+                                    time,
+                                    activityIndex,
+                                    updatedActivity
+                                  )
+                                }
+                              />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                    </div>
                     {provided.placeholder}
                   </div>
                 )}
               </Droppable>
             ))
           )}
-        <button className={styles.saveButton} onClick={handleSaveItinerary}>
-          Save Itinerary
-        </button>
+        <div className="save">
+          <button className="saveButton" onClick={handleSaveItinerary}>
+            Save Itinerary
+          </button>
+        </div>
       </DragDropContext>
     </>
   );
