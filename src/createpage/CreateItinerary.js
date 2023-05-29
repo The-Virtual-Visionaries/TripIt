@@ -139,7 +139,7 @@ function CreateItinerary() {
             })
             .catch(error => {
                 // Handle error
-                console.error(error);
+                alert("Server Error!")
             });
         /** 
                 {
