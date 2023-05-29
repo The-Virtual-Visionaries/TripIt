@@ -14,7 +14,7 @@
 <hr>
 
 ## Try TripIt for yourself!
-Head over to our website [here!](https://www.google.com/)
+Head over to our website [here!](https://tripit-lifehack.netlify.app/)
 
 ## Features
 - **Personalized Itineraries** - TripIt uses artificial intelligence to generate personalized itineraries based on your travel preferences and needs.
