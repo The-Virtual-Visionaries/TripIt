@@ -5,7 +5,6 @@ import Itineraries from "./itinerariespage/Itineraries";
 import React from "react";
 import Login from "./components/Login";
 import CreateItinerary from "./createpage/CreateItinerary";
-import Offerings from "./authpage/Offerings";
 import ActivityRecommender from "./activitypage/ActivityRecommender";
 
 function App() {
@@ -13,7 +12,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Mainpage />} />
-        <Route path="/offerings" element={<Offerings />} />
         <Route path="/create" element={<CreateItinerary />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
