@@ -1,0 +1,12 @@
+.iti-title {
+    text-align: center;
+    margin: 4vh;
+}
+
+.itinerary-container {
+    margin: 5vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}

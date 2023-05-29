@@ -5,6 +5,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import Itinerary from "./Itinerary.js";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import './Itineraries.css';
 import Loading from "../components/Loading.js";
 
 export default function Itineraries() {
@@ -57,7 +58,7 @@ export default function Itineraries() {
   };
 
   return (
-    <div>
+    <div className="itineraries-container">
       <Navbar />
       {loaded !== true && <Loading />}
       {itineraries.length === 0 && loaded === true && (
@@ -65,6 +66,7 @@ export default function Itineraries() {
           No itineraries finalised yet.
         </div>
       )}
+      <div className="itinerary-container">
       {itineraries.length > 0 &&
         loaded === true &&
         itineraries.map((item) => (
@@ -82,6 +84,7 @@ export default function Itineraries() {
             changer={setReload}
           />
         ))}
+      </div>
     </div>
   );
 }
