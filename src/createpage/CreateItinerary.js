@@ -4,6 +4,7 @@ import Select from "react-select";
 import countryList from "react-select-country-list";
 import "./CreateItinerary.css";
 import Navbar from "../Navbar";
+import { auth } from "../firebase";
 
 function CreateItinerary() {
   const [country, setCountry] = useState("");
@@ -39,10 +40,13 @@ function CreateItinerary() {
     event.preventDefault();
 
     const itineraryDetails = {
-      country,
-      startDate,
-      endDate,
-      preferences,
+      iid: "",
+      destination: country.label,
+      startDate: startDate,
+      endDate: endDate,
+      days: 3,
+      name: "Itinerary Name",
+      uid: auth.currentUser.uid,
     };
     /** 
         {
@@ -58,32 +62,22 @@ function CreateItinerary() {
         day: 1,
         Morning: [
           {
-            activity_type: "Day 1 Activity 1",
-            description: "Day 1 Activity 1 Description",
-          },
-          {
-            activity_type: "Day 1 Activity 2",
-            description: "Day 1 Activity 2 Description",
+            activity_name: "Visit the Sydney Opera House",
+            description:
+              "Explore the iconic building and take in the stunning views of the harbor.",
           },
         ],
         Afternoon: [
           {
-            activity_type: "Day 1 Activity 3",
-            description: "Day 1 Activity 3 Description",
-          },
-          {
-            activity_type: "Day 1 Activity 4",
-            description: "Day 1 Activity 4 Description",
+            activity_name: "Visit the Museum of Contemporary Art",
+            description:
+              "Explore the museum's collection of modern and contemporary art.",
           },
         ],
         Night: [
           {
-            activity_type: "Day 1 Activity 5",
-            description: "Day 1 Activity 5 Description",
-          },
-          {
-            activity_type: "Day 1 Activity 6",
-            description: "Day 1 Activity 6 Description",
+            activity_name: "Take a stroll around Darling Harbour",
+            description: "Enjoy the views of the harbor and the city skyline.",
           },
         ],
       },
@@ -91,37 +85,31 @@ function CreateItinerary() {
         day: 2,
         Morning: [
           {
-            activity_type: "Day 2 Activity 1",
-            description: "Day 2 Activity 1 Description",
-          },
-          {
-            activity_type: "Day 2 Activity 2",
-            description: "Day 2 Activity 2 Description",
+            activity_name: "Visit the Queen Victoria Building",
+            description:
+              "Explore the historic building and its many shops and restaurants.",
           },
         ],
         Afternoon: [
           {
-            activity_type: "Day 2 Activity 3",
-            description: "Day 2 Activity 3 Description",
-          },
-          {
-            activity_type: "Day 2 Activity 4",
-            description: "Day 2 Activity 4 Description",
+            activity_name: "Visit the Royal Botanic Gardens",
+            description:
+              "Enjoy the lush gardens and take in the stunning views of the harbor.",
           },
         ],
         Night: [
           {
-            activity_type: "Day 2 Activity 5",
-            description: "Day 2 Activity 5 Description",
-          },
-          {
-            activity_type: "Day 2 Activity 6",
-            description: "Day 2 Activity 6 Description",
+            activity_name: "Take a ride on the Sydney Ferris Wheel",
+            description:
+              "Enjoy the views of the city from the top of the wheel.",
           },
         ],
       },
     ];
-    navigate("/activity", { state: { data: sampleData } });
+
+    navigate("/activity", {
+      state: { data: sampleData, itinerary: itineraryDetails },
+    });
   };
 
   return (

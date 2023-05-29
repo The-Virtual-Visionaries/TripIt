@@ -1,13 +1,206 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar.js";
 import styles from "./ActivityRecommender.module.css";
+import { setDoc } from "firebase/firestore";
+import { db } from "../firebase.js";
+import {
+  doc,
+  collection,
+  query,
+  getDocs,
+  deleteDoc,
+  addDoc,
+} from "firebase/firestore";
 
 const ActivityRecommender = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [data, setData] = useState(location.state.data);
+  const [itinerary, setItinerary] = useState(location.state.itinerary);
+  // can generalise gpt route to pass in loaded as true - location.state.loaded == true
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (itinerary.iid !== "") {
+      getInitialActivities();
+    } else {
+      setLoaded(true);
+    }
+  }, []);
+
+  // firestore route, get all stored activities for this itinerary
+  const getInitialActivities = () => {
+    const list = [];
+    const activitiesQuery = query(
+      collection(db, "itineraries", itinerary.iid, "activities")
+    );
+    try {
+      getDocs(activitiesQuery).then((snapshot) => {
+        snapshot.forEach((activity) => {
+          list.push({
+            day: activity.data().day,
+            timing: activity.data().timing,
+            description: activity.data().description,
+            activity_name: activity.data().activity_name,
+          });
+        });
+        setData(firestoreToJson(list));
+        setLoaded(true);
+      });
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
+  const handleSaveItinerary = () => {
+    // field validation
+    // ...
+    if (itinerary.iid === "") {
+      // create new itinerary since fresh itinerary from gpt prompts
+      handleCreateAndUpdateItinerary();
+    } else {
+      // clear out activities of itinerary and update with new activities
+      handleClearAndUpdateItinerary();
+    }
+    navigate("/itineraries");
+  };
+
+  const handleCreateAndUpdateItinerary = () => {
+    if (
+      itinerary.destination === "" ||
+      itinerary.startDate === "" ||
+      itinerary.endDate === "" ||
+      itinerary.days === "" ||
+      itinerary.name === "" ||
+      itinerary.uid === ""
+    ) {
+      console.log("Missing fields.");
+    } else {
+      const docRef = doc(collection(db, "itineraries"));
+      setItinerary({ ...itinerary, iid: docRef.id });
+      setDoc(docRef, {
+        destination: itinerary.destination,
+        startDate: itinerary.startDate,
+        endDate: itinerary.endDate,
+        days: itinerary.days,
+        name: itinerary.name,
+        uid: itinerary.uid,
+      })
+        .then(() => {
+          // create new empty activities collection to itinerary doc
+          const colRef = collection(db, "itineraries", docRef.id, "activities");
+          handleUpdatingItinerary(colRef, jsonToFirestore(data));
+        })
+        .catch((error) => console.log(error.message));
+    }
+  };
+
+  const handleClearAndUpdateItinerary = () => {
+    // delete all activities of itinerary based on iid
+    const colRef = collection(db, "itineraries", itinerary.iid, "activities");
+    const activitiesQuery = query(colRef);
+    try {
+      getDocs(activitiesQuery)
+        .then((snapshot) => {
+          snapshot.forEach((activity) => {
+            deleteDoc(
+              doc(db, "itineraries", itinerary.iid, "activities", activity.id)
+            );
+          });
+        })
+        .then(() => {
+          handleUpdatingItinerary(colRef, jsonToFirestore(data));
+        });
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
+  const handleUpdatingItinerary = (colRef, activities) => {
+    // update activities of itinerary based on colRef
+    for (let i = 0; i < activities.length; i++) {
+      addDoc(colRef, {
+        day: activities[i].day,
+        timing: activities[i].timing,
+        description: activities[i].description,
+        activity_name: activities[i].activity_name,
+      })
+        .then(() => {
+          console.log("Document successfully written!");
+        })
+        .catch((error) => console.log(error.message));
+    }
+  };
+
+  // convert firestore array data to json format
+  const firestoreToJson = (list) => {
+    const jsonArray = [];
+    for (let i = 1; i < itinerary.days + 1; i++) {
+      jsonArray.push({
+        day: i,
+        Morning: [],
+        Afternoon: [],
+        Night: [],
+      });
+    }
+    for (let i = 0; i < list.length; i++) {
+      const day = list[i].day;
+      const timing = list[i].timing;
+      const activity = {
+        description: list[i].description,
+        activity_name: list[i].activity_name,
+      };
+      if (timing === "Morning") {
+        jsonArray[day - 1].Morning.push(activity);
+      } else if (timing === "Afternoon") {
+        jsonArray[day - 1].Afternoon.push(activity);
+      } else if (timing === "Night") {
+        jsonArray[day - 1].Night.push(activity);
+      }
+    }
+    return jsonArray;
+  };
+
+  // convert json format to firestore array data
+  const jsonToFirestore = (json) => {
+    const firestoreArray = [];
+    for (let i = 0; i < json.length; i++) {
+      const day = json[i].day;
+      const morning = json[i].Morning;
+      const afternoon = json[i].Afternoon;
+      const night = json[i].Night;
+      for (let j = 0; j < morning.length; j++) {
+        const activity = {
+          day: day,
+          timing: "Morning",
+          description: morning[j].description,
+          activity_name: morning[j].activity_name,
+        };
+        firestoreArray.push(activity);
+      }
+      for (let j = 0; j < afternoon.length; j++) {
+        const activity = {
+          day: day,
+          timing: "Afternoon",
+          description: afternoon[j].description,
+          activity_name: afternoon[j].activity_name,
+        };
+        firestoreArray.push(activity);
+      }
+      for (let j = 0; j < night.length; j++) {
+        const activity = {
+          day: day,
+          timing: "night",
+          description: night[j].description,
+          activity_name: night[j].activity_name,
+        };
+        firestoreArray.push(activity);
+      }
+    }
+    return firestoreArray;
+  };
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
@@ -30,10 +223,6 @@ const ActivityRecommender = () => {
     setData([...data]);
   };
 
-  const handleSaveItinerary = () => {
-    navigate("/history", { state: { data: data } });
-  };
-
   const addActivity = (dayId, time, activity) => {
     const day = data.find((day) => day.day === dayId);
     day[time].push(activity);
@@ -48,13 +237,13 @@ const ActivityRecommender = () => {
 
   const AddActivityButton = ({ onAdd }) => {
     const [showForm, setShowForm] = useState(false);
-    const [activityType, setActivityType] = useState("");
+    const [activityName, setActivityName] = useState("");
     const [activityDescription, setActivityDescription] = useState("");
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      onAdd({ activity_type: activityType, description: activityDescription });
-      setActivityType("");
+      onAdd({ activity_name: activityName, description: activityDescription });
+      setActivityName("");
       setActivityDescription("");
       setShowForm(false);
     };
@@ -64,9 +253,9 @@ const ActivityRecommender = () => {
         {showForm ? (
           <form onSubmit={handleSubmit}>
             <input
-              value={activityType}
-              onChange={(e) => setActivityType(e.target.value)}
-              placeholder="Activity Type"
+              value={activityName}
+              onChange={(e) => setActivityName(e.target.value)}
+              placeholder="Activity Name"
             />
             <input
               value={activityDescription}
@@ -85,22 +274,22 @@ const ActivityRecommender = () => {
 
   const EditableActivity = ({ activity, onDelete, onEdit }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [activityType, setActivityType] = useState(activity.activity_type);
+    const [activityName, setActivityName] = useState(activity.activity_name);
     const [activityDescription, setActivityDescription] = useState(
       activity.description
     );
 
     const handleEdit = (event) => {
       event.preventDefault();
-      onEdit({ activity_type: activityType, description: activityDescription });
+      onEdit({ activity_name: activityName, description: activityDescription });
       setIsEditing(false);
     };
 
     return isEditing ? (
       <form onSubmit={handleEdit}>
         <input
-          value={activityType}
-          onChange={(e) => setActivityType(e.target.value)}
+          value={activityName}
+          onChange={(e) => setActivityName(e.target.value)}
         />
         <input
           value={activityDescription}
@@ -111,73 +300,73 @@ const ActivityRecommender = () => {
       </form>
     ) : (
       <div>
-        <h3>{activity.activity_type}</h3>
+        <h3>{activity.activity_name}</h3>
         <p>{activity.description}</p>
         <button onClick={() => setIsEditing(true)}>Edit</button>
         <button onClick={onDelete}>Delete</button>
       </div>
     );
   };
-
   return (
     <>
       <Navbar />
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        {data.map((day, index) =>
-          ["Morning", "Afternoon", "Night"].map((time) => (
-            <Droppable
-              droppableId={`${day.day}-${time}`}
-              key={`${index}-${time}`}
-            >
-              {(provided) => (
-                <div
-                  className={styles.activityContainer}
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
-                  <h2 className={styles.title}>
-                    Day {day.day} - {time}
-                  </h2>
-                  {day[time].map((activity, activityIndex) => (
-                    <Draggable
-                      key={activity.activity_type}
-                      draggableId={activity.activity_type}
-                      index={activityIndex}
-                    >
-                      {(provided) => (
-                        <div
-                          className={styles.root}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                        >
-                          <EditableActivity
-                            activity={activity}
-                            onDelete={() =>
-                              deleteActivity(day.day, time, activityIndex)
-                            }
-                            onEdit={(updatedActivity) =>
-                              editActivity(
-                                day.day,
-                                time,
-                                activityIndex,
-                                updatedActivity
-                              )
-                            }
-                          />
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  <AddActivityButton
-                    onAdd={(activity) => addActivity(day.day, time, activity)}
-                  />
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          ))
-        )}
+        {loaded === true &&
+          data.map((day, index) =>
+            ["Morning", "Afternoon", "Night"].map((time) => (
+              <Droppable
+                droppableId={`${day.day}-${time}`}
+                key={`${index}-${time}`}
+              >
+                {(provided) => (
+                  <div
+                    className={styles.activityContainer}
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    <h2 className={styles.title}>
+                      Day {day.day} - {time}
+                    </h2>
+                    {day[time].map((activity, activityIndex) => (
+                      <Draggable
+                        key={activity.activity_name}
+                        draggableId={activity.activity_name}
+                        index={activityIndex}
+                      >
+                        {(provided) => (
+                          <div
+                            className={styles.root}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}
+                          >
+                            <EditableActivity
+                              activity={activity}
+                              onDelete={() =>
+                                deleteActivity(day.day, time, activityIndex)
+                              }
+                              onEdit={(updatedActivity) =>
+                                editActivity(
+                                  day.day,
+                                  time,
+                                  activityIndex,
+                                  updatedActivity
+                                )
+                              }
+                            />
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    <AddActivityButton
+                      onAdd={(activity) => addActivity(day.day, time, activity)}
+                    />
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            ))
+          )}
         <button className={styles.saveButton} onClick={handleSaveItinerary}>
           Save Itinerary
         </button>
