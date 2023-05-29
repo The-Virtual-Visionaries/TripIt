@@ -132,7 +132,6 @@ function CreateItinerary() {
       state: { data: recommended_activities, itinerary: itineraryDetails },
     });
   };
-
   return (
     <>
       <Navbar />
@@ -169,17 +168,21 @@ function CreateItinerary() {
         <div className="preferences">
           <div className="pref-title">What are your travel preferences</div>
           <div className="preference-inputs">
-            {preferences.map((preference, index) => (
-              <div key={index} className="preference-input">
-                <input
-                  type="text"
-                  value={preference}
-                  onChange={(event) => handlePreferenceChange(index, event)}
-                />
-              </div>
-            ))}
-            <button onClick={handleAddPreference}>
-              Add one more preference
+            <div className="preference-input">
+              {preferences.map((preference, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    value={preference}
+                    placeholder="your preferences..."
+                    className="pref-button"
+                    onChange={(event) => handlePreferenceChange(index, event)}
+                  />
+                </div>
+              ))}
+            </div>
+            <button onClick={handleAddPreference} className="addpref-btn">
+              Add Preference
             </button>
           </div>
         </div>

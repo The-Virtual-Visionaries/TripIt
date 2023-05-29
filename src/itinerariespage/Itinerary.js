@@ -1,6 +1,8 @@
-import React from "react";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
+import React, { useState } from "react";
+import { ClassNames } from "@emotion/react";
+import "./Itinerary.css";
 
 export default function Itinerary(props) {
   const {
@@ -39,14 +41,20 @@ export default function Itinerary(props) {
   };
 
   return (
-    <div style={{ border: "1px solid black", padding: "10px" }}>
-      <p>Name: {name}</p>
-      <p>Destination: {destination}</p>
-      <p>Start Date: {startDate}</p>
-      <p>End Date: {endDate}</p>
-      <p>Days: {days}</p>
-      <button onClick={handleEditItinerary}>Edit Itinerary</button>
-      <button onClick={handleDeleteItinerary}>Delete Itinerary</button>
+    <div className="card card-custom" style={{ width: "18rem" }}>
+      <div class="card-body card-body-custom">
+        <div class="card-title card-title-custom">
+          <div>{name}</div>
+        </div>
+        <div class="card-subtitle mb-2 text-body-secondary">{destination}</div>
+        <div class="card-text">
+          {startDate} - {endDate}
+        </div>
+      </div>
     </div>
   );
 }
+
+// buttons for edit and delete
+// <button onClick={handleEditItinerary}>Edit Itinerary</button>
+// <button onClick={handleDeleteItinerary}>Delete Itinerary</button>

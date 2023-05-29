@@ -378,8 +378,8 @@ const ActivityRecommender = () => {
                     <div className="activity-info">
                       {day[time].map((activity, activityIndex) => (
                         <Draggable
-                          key={activity.activity_type}
-                          draggableId={activity.activity_type}
+                          key={activity.activity_name}
+                          draggableId={activity.activity_name}
                           index={activityIndex}
                         >
                           {(provided) => (

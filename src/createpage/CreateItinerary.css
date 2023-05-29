@@ -60,7 +60,8 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .pref-button {
@@ -73,12 +74,13 @@
 
 .addpref-btn {
     color: white;
-    background-color: gray;
+    background-color: #7F9CC6;
     cursor: pointer;
     margin-top: 2vh;
     box-shadow: none;
     border: none;
     border-radius: 5px;
+    padding: 8px;
 }
 
 .generate-button {
