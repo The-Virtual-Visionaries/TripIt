@@ -50,7 +50,7 @@ export default function Itineraries() {
     <div>
       <Navbar />
       {itineraries.length === 0 && loaded === true && (
-        <span>No itineraries finalised yet.</span>
+        <div style={{textAlign:'center', margin:'45vh'}}>No itineraries finalised yet.</div>
       )}
       {itineraries.length > 0 &&
         itineraries.map((item) => (

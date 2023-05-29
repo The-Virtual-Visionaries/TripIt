@@ -2,6 +2,7 @@ import React from 'react'
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import './SignOut.css';
 
 function SignOut() {
 
@@ -18,7 +19,7 @@ function SignOut() {
 
     return (
         <div>
-            <button onClick={userSignOut} type="submit" style={{ borderRadius: '10px', border: 'none', padding: '8px' }}>Logout</button>
+            <button onClick={userSignOut} type="submit" className='logout-btn'>Logout</button>
         </div>
     )
 }
