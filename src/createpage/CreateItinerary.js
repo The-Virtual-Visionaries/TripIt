@@ -175,6 +175,10 @@ function CreateItinerary() {
                         </button>
                     </div>
                 </div>
+                <div className="naming">
+                    <div className="naming-title">What is your itinerary's name?</div>
+                    <input class="form-control small-input" type="text" placeholder="name..." aria-label="default input example"></input>
+                </div>
                 <div className="generate-button">
                     <button
                         type="button"
