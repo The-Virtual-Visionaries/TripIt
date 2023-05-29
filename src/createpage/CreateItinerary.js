@@ -117,7 +117,7 @@ function CreateItinerary() {
             startDate: startDate,
             endDate: endDate,
             days: diff,
-            name: "Itinerary Name",
+            name: itineraryName,
             uid: auth.currentUser.uid,
         };
 
