@@ -226,6 +226,10 @@ function CreateItinerary() {
             </button>
           </div>
         </div>
+        <div className="naming">
+            <div>What's your itinerary name?</div>
+            <input class="form-control small-input" type="text" placeholder="name..." aria-label="default input example"></input>
+        </div>
         {errors.length > 0 && (
           <div className="error-container">
             {errors.map((error, index) => (
