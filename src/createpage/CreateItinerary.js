@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 import "./CreateItinerary.css";
 import Navbar from "../Navbar";
 import { auth } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
 // import axios from "axios";
 
 function CreateItinerary() {
@@ -16,6 +17,17 @@ function CreateItinerary() {
   const navigate = useNavigate();
   const options = countryList().getData();
   const [errors, setErrors] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("user logged in");
+      } else {
+        navigate("/");
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handlePreferenceChange = (index, event) => {
     const values = [...preferences];
@@ -68,6 +80,7 @@ function CreateItinerary() {
     for (let preference of preferences) {
       if (preference.length > 20) {
         errors.push("Preferences should not be more than 20 characters");
+        break;
       }
     }
 
