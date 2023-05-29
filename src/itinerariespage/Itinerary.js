@@ -42,19 +42,19 @@ export default function Itinerary(props) {
 
   return (
     <div className="itinerary">
-    <div className="card card-custom">
-        <div class="card-title card-title-custom">
-          <div>{destination.toUpperCase()}</div>
-        </div>
-        <div class="card-subtitle">{name}</div>
-        <div class="card-text">
-          {startDate} - {endDate}
-        </div>
-        <div className="iti-buttons">
-          <button className="iti-button" onClick={handleEditItinerary}>Edit</button>
-          <button className="iti-button" onClick={handleDeleteItinerary}>Delete</button>
-        </div>
-    </div>
+      <div className="card card-custom">
+          <div class="card-title card-title-custom">
+            <div>{name.toUpperCase()}</div>
+          </div>
+          <div class="card-subtitle">{destination}</div>
+          <div class="card-text">
+            {startDate} - {endDate}
+          </div>
+          <div className="iti-buttons">
+            <button className="iti-button" onClick={handleEditItinerary}>Edit</button>
+            <button className="iti-button" onClick={handleDeleteItinerary}>Delete</button>
+          </div>
+      </div>
     </div>
   );
 }
