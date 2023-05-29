@@ -80,6 +80,7 @@ function CreateItinerary() {
     for (let preference of preferences) {
       if (preference.length > 20) {
         errors.push("Preferences should not be more than 20 characters");
+        break;
       }
     }
 
