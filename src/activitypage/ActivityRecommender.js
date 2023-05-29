@@ -14,6 +14,7 @@ import {
 } from "firebase/firestore";
 import "./ActivityRecommender.css";
 import * as dateFns from "date-fns";
+import Loading from "../components/Loading.js";
 
 const ActivityRecommender = () => {
   const location = useLocation();
@@ -356,6 +357,7 @@ const ActivityRecommender = () => {
   return (
     <>
       <Navbar />
+      {loaded === false && <Loading />}
       <DragDropContext onDragEnd={handleOnDragEnd}>
         {loaded === true &&
           data.map((day, index) =>
