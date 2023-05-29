@@ -1,30 +1,38 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar.js";
 import { auth, db } from "../firebase.js";
-import { doc, collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import Itinerary from "./Itinerary.js";
+import { onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function Itineraries() {
   const [itineraries, setItineraries] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const user = auth.currentUser;
-  if (user != null) {
-    const uid = user.uid;
-    console.log(uid);
-  } else {
-    console.log("user is null");
-  }
+  const [uid, setUid] = useState("");
+  const navigate = useNavigate();
+  const [reload, setReload] = useState(true);
 
   useEffect(() => {
-    getItineraries();
-  }, []);
+    console.log("1");
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        setUid(uid);
+        getItineraries(uid);
+      } else {
+        console.log("user is not signed in");
+      }
+    });
+    return () => unsubscribe();
+  }, [reload]);
 
-  // get itinerary list from db, based on user id and finalised boolean
-  const getItineraries = () => {
+  // get itinerary list from db, based on user id
+  const getItineraries = (uid) => {
     const list = [];
     const itineraryQuery = query(
       collection(db, "itineraries"),
-      where("uid", "==", "12345")
+      where("uid", "==", uid)
     );
     try {
       // const itineraryQuerySnapshot = getDocs(itineraryQuery);
@@ -36,6 +44,7 @@ export default function Itineraries() {
             destination: itinerary.data().destination,
             startDate: itinerary.data().startDate,
             endDate: itinerary.data().endDate,
+            days: itinerary.data().days,
           });
         });
         setItineraries(list);
@@ -61,6 +70,11 @@ export default function Itineraries() {
             destination={item.destination}
             startDate={item.startDate}
             endDate={item.endDate}
+            days={item.days}
+            navigate={navigate}
+            uid={uid}
+            change={reload}
+            changer={setReload}
           />
         ))}
     </div>
