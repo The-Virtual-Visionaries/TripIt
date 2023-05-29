@@ -5,6 +5,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import Itinerary from "./Itinerary.js";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading.js";
 
 export default function Itineraries() {
   const [itineraries, setItineraries] = useState([]);
@@ -58,10 +59,14 @@ export default function Itineraries() {
   return (
     <div>
       <Navbar />
+      {loaded !== true && <Loading />}
       {itineraries.length === 0 && loaded === true && (
-        <div style={{textAlign:'center', margin:'45vh'}}>No itineraries finalised yet.</div>
+        <div style={{ textAlign: "center", margin: "45vh" }}>
+          No itineraries finalised yet.
+        </div>
       )}
       {itineraries.length > 0 &&
+        loaded === true &&
         itineraries.map((item) => (
           <Itinerary
             key={item.iid}
