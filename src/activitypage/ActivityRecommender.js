@@ -13,6 +13,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 import "./ActivityRecommender.css";
+import * as dateFns from "date-fns";
 
 const ActivityRecommender = () => {
   const location = useLocation();
@@ -29,6 +30,12 @@ const ActivityRecommender = () => {
       setLoaded(true);
     }
   }, []);
+
+  const getActualDate = (startDate, dayNumber) => {
+    let actualDate = new Date(startDate);
+    actualDate.setDate(actualDate.getDate() + dayNumber - 1);
+    return dateFns.format(actualDate, "dd MMM yyyy");
+  };
 
   // firestore route, get all stored activities for this itinerary
   const getInitialActivities = () => {
@@ -365,8 +372,9 @@ const ActivityRecommender = () => {
                   >
                     <div className="activity-header">
                       <div className="day">
-                        Day {day.day} - {time}
+                        {getActualDate(itinerary.startDate, day.day)} - {time}
                       </div>
+
                       <div className="add-activity-btn">
                         <AddActivityButton
                           onAdd={(activity) =>
