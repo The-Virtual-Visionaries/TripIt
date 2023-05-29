@@ -1,15 +1,52 @@
 .card-custom {
-    margin: 20px;
-    border-radius: 10px;
+    margin-left: 4vw;
+    margin-right: 4vw;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    width: 20vw;
+    height: 40vh;
+    border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .card-title-custom {
     font-weight: 700;
     font-size: 2vw;
+    background-color: #001533;
+    color: white;
+    padding: 1vw;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    text-align: center;
 }
 
 .card-subtitle {
     font-size: 1.5vw; 
-    color: blue;
+    color: black;
+    text-align: center;
+    padding: 5vh;
+    font-weight: 600;
+    background-color: #FFF1F1;
+}
+
+.card-text {
+    padding: 2vh;
+    text-align: center;
+}
+
+.iti-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.iti-button {
+    background-color: #4285F4;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 10px;
+    width: 6vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
 }

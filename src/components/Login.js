@@ -7,10 +7,19 @@ import "./Login.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
   const signIn = (e) => {
     e.preventDefault();
+
+    const errors = validateInputs();
+
+    if (errors.length > 0) {
+      setErrors(errors);
+      return;
+    }
+
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
@@ -19,6 +28,19 @@ const Login = () => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const validateInputs = () => {
+    let errors = [];
+    if (!email.trim()) {
+      errors.push("Email should not be empty");
+    }
+
+    if (!password.trim()) {
+      errors.push("Password should not be empty");
+    }
+
+    return errors;
   };
 
   return (
@@ -50,6 +72,15 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></input>
+          {errors.length > 0 && (
+            <div className="error-container">
+              {errors.map((error, index) => (
+                <div key={index} className="error-message">
+                  {error}
+                </div>
+              ))}
+            </div>
+          )}
           <button type="submit" className="login-button">
             Login
           </button>
