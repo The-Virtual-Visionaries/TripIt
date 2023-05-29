@@ -178,6 +178,7 @@ function CreateItinerary() {
                     className="pref-button"
                     onChange={(event) => handlePreferenceChange(index, event)}
                   />
+
                 </div>
               ))}
             </div>
