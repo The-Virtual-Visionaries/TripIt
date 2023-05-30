@@ -8,7 +8,7 @@ from formatter import parse_response, convert_to_itinerary
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 
-token_estimator = {days: days * 300 for days in range(1, 10)}
+token_estimator = {days: days * 400 for days in range(1, 10)}
 
 # Configure the parameters from the frontend
 def chatgpt(country, num_days, start_date, end_date, preferences):
@@ -20,16 +20,14 @@ def chatgpt(country, num_days, start_date, end_date, preferences):
     3. Preference: {preferences} but add other activities too
     4. Activities should fall under: Museums, Shopping, Skyscrappers, Nature, Theme Parks, Historical Architectures, Others
     5. Give me multiple options for me to choose from
+    6. No extra | at the end of the line
     7. Don't have a extra line between the Days
 
     Follow this format for me to parse later
     Day 1
-    Morning
-    Activity Name | Description
-    Afternoon
-    Activity Name | Description
-    Night
-    Activity Name | Description
+    Morning | Activity Name | Description
+    Afternoon |Activity Name | Description
+    Night | Activity Name | Description
 
     Keep the description concise and only include the itinerary details. Ensure the total response has no cut off and each day has some activities.
     """.format(

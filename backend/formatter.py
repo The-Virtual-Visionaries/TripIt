@@ -57,6 +57,10 @@ def convert_to_itinerary(text):
     lines = text.split("\n")
     itinerary = []
     current_day = None
+    print(text)
+    print(text)
+    print(text)
+    print(text)
 
     for line in lines:
         # Ignore empty lines
@@ -69,11 +73,12 @@ def convert_to_itinerary(text):
             day_num = int(line.split(" ")[1])
             current_day = {"day": day_num}
         else:
-            time_of_day, activity_type, description = line.split(" | ")
+            print(line)
+            time_of_day, activity_name, description = line.split(" | ")
             if time_of_day not in current_day:
                 current_day[time_of_day] = []
             current_day[time_of_day].append(
-                {"activity_name": activity_type, "description": description}
+                {"activity_name": activity_name, "description": description}
             )
 
     # Append the last day to the itinerary
